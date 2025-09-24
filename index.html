@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Мой сайт</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой крутой сайт</title>
+    <!-- Подключаем CSS файл -->
+    <link rel="stylesheet" href="stl.css">
 </head>
 <body>
-    <h1>Привет! Мой сайт работает!</h1>
-    <p>Если вы это видите, всё настроено правильно.</p>
+    <header class="header">
+        <h1>Привет, я [Ваше Имя]</h1>
+        <p>Веб-разработчик</p>
+    </header>
+
+    <main class="main">
+        <section id="about">
+            <h2>Обо мне</h2>
+            <p>Я изучаю веб-разработку и это мой первый сайт!</p>
+        </section>
+
+        <section id="contacts">
+            <h2>Свяжитесь со мной</h2>
+            <button id="myButton">Написать сообщение</button>
+        </section>
+    </main>
+
+    <!-- Подключаем JavaScript файл в конце тела -->
+    <script src="scrp.js"></script>
 </body>
 </html>
