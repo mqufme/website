@@ -3,29 +3,478 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой крутой сайт</title>
-    <!-- Подключаем CSS файл -->
-    <link rel="stylesheet" href="stl.css">
+    <title>Диана - мой мир</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #0a0e17;
+            color: #e6f1ff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Минималистичный фон ночного неба */
+        .night-sky {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background:
+                radial-gradient(ellipse at 20% 30%, #1a2a4f 0%, transparent 40%),
+                radial-gradient(ellipse at 80% 40%, #152642 0%, transparent 40%),
+                linear-gradient(to bottom, #0a0e17 0%, #0a192f 100%);
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 4s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Контент поверх фона */
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(10, 14, 23, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(100, 150, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #64b5f6, #90caf9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(100, 181, 246, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #bbdefb;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0 30px;
+        }
+
+        .filter-btn {
+            background: rgba(25, 35, 60, 0.8);
+            border: 1px solid rgba(100, 150, 255, 0.3);
+            color: #e3f2fd;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .filter-btn:hover {
+            background: rgba(40, 60, 100, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .filter-btn.active {
+            background: rgba(66, 133, 244, 0.3);
+            border-color: rgba(66, 133, 244, 0.6);
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.2);
+        }
+
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .gif-container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .miniatures-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .media-item {
+            background: rgba(15, 25, 45, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(100, 150, 255, 0.1);
+        }
+
+        .media-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+            border-color: rgba(100, 150, 255, 0.3);
+        }
+
+        .gif-content {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .audio-content {
+            width: 100%;
+            height: 80px;
+            background: rgba(0, 10, 30, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(100, 150, 255, 0.1);
+        }
+
+        .mini-file-content {
+            width: 100%;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: rgba(0, 10, 30, 0.4);
+            border-bottom: 1px solid rgba(100, 150, 255, 0.1);
+        }
+
+        .mini-file-icon {
+            font-size: 40px;
+            margin-bottom: 5px;
+        }
+
+        .media-info {
+            padding: 15px;
+        }
+
+        .mini-media-info {
+            padding: 10px;
+        }
+
+        .media-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #bbdefb;
+        }
+
+        .mini-media-title {
+            font-size: 1rem;
+            margin-bottom: 3px;
+            font-weight: 600;
+            color: #bbdefb;
+        }
+
+        .media-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.4;
+            color: #90caf9;
+        }
+
+        .mini-media-description {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            line-height: 1.3;
+            color: #90caf9;
+        }
+
+        .media-type {
+            display: inline-block;
+            background: rgba(66, 133, 244, 0.3);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            color: #bbdefb;
+        }
+
+        .mini-media-type {
+            display: inline-block;
+            background: rgba(66, 133, 244, 0.3);
+            padding: 2px 8px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            margin-top: 8px;
+            color: #bbdefb;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            color: #90caf9;
+        }
+
+        @media (max-width: 1024px) {
+            .miniatures-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .miniatures-row {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filter-btn {
+                width: 80%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <h1>Привет, я [Ваше Имя]</h1>
-        <p>Веб-разработчик</p>
-    </header>
+    <!-- Минималистичный фон ночного неба -->
+    <div class="night-sky">
+        <div class="stars" id="stars"></div>
+    </div>
 
-    <main class="main">
-        <section id="about">
-            <h2>Обо мне</h2>
-            <p>Я изучаю веб-разработку и это мой первый сайт!</p>
-        </section>
+    <!-- Контент -->
+    <div class="content">
+        <header>
+            <h1>Диана - мой мир</h1>
+            <p class="subtitle">всё только начинается <3 </p>
+        </header>
 
-        <section id="contacts">
-            <h2>Свяжитесь со мной</h2>
-            <button id="myButton">Написать сообщение</button>
-        </section>
-    </main>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Главная(ты)</button>
+            <button class="filter-btn" data-filter="audio">Аудиоlove</button>
+            <button class="filter-btn" data-filter="file">официальное и важное</button>
+        </div>
 
-    <!-- Подключаем JavaScript файл в конце тела -->
-    <script src="scrp.js"></script>
+        <div class="gallery">
+            <!-- GIF отдельно посередине -->
+            <div class="gif-container">
+                <div class="media-item" data-type="gif">
+                    <img src="ваша-гифка.gif" alt="Анимация" class="gif-content">
+                    <div class="media-info">
+                        <h3 class="media-title">I LOVE U</h3>
+                        <p class="media-description">Красочная(ты) анимация</p>
+                        <span class="media-type">гифка</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 миниатюры в один ряд -->
+            <div class="miniatures-row">
+                <!-- Аудио 1 -->
+                <div class="media-item" data-type="audio">
+                    <div class="audio-content">
+                        <audio controls style="width: 90%;">
+                            <source src="" type="audio/mpeg">
+                            Ваш браузер не поддерживает аудио элементы.
+                        </audio>
+                    </div>
+                    <div class="mini-media-info">
+                        <h3 class="mini-media-title">мурчание</h3>
+                        <p class="mini-media-description">Приятная мелодия для расслабления</p>
+                        <span class="mini-media-type">Аудиоlove</span>
+                    </div>
+                </div>
+
+                <!-- Аудио 2 -->
+                <div class="media-item" data-type="audio">
+                    <div class="audio-content">
+                        <audio controls style="width: 90%;">
+                            <source src="" type="audio/mpeg">
+                            Ваш браузер не поддерживает аудио элементы.
+                        </audio>
+                    </div>
+                    <div class="mini-media-info">
+                        <h3 class="mini-media-title">1 полноценный трек(судите Строго)</h3>
+                        <p class="mini-media-description">Эээ, тот трек - для тебя</p>
+                        <span class="mini-media-type">Аудиоlove</span>
+                    </div>
+                </div>
+
+                <!-- Файл 1 -->
+                <div class="media-item" data-type="file">
+                    <div class="mini-file-content">
+                        <div class="mini-file-icon">🎰</div>
+                        <a href="https://disk.yandex.ru/i/JC-rZQSOnEwlLg" download style="color: #bbdefb; text-decoration: none;">
+                            <h3>опасно/риск.pptx</h3>
+                        </a>
+                    </div>
+                    <div class="mini-media-info">
+                        <h3 class="mini-media-title">Важный документ</h3>
+                        <p class="mini-media-description">Полезная информация в формате WW</p>
+                        <span class="mini-media-type">официальное и важное</span>
+                    </div>
+                </div>
+
+                <!-- Файл 2 -->
+                <div class="media-item" data-type="file">
+                    <div class="mini-file-content">
+                        <div class="mini-file-icon">📊</div>
+                        <a href="https://disk.yandex.ru/i/l3Pete-z2-DAGw" download style="color: #bbdefb; text-decoration: none;">
+                            <h3>Омаров(презентация)</h3>
+                        </a>
+                    </div>
+                    <div class="mini-media-info">
+                        <h3 class="mini-media-title">Бизнес-презентация</h3>
+                        <p class="mini-media-description">Слайды для важного выступления</p>
+                        <span class="mini-media-type">официальное и важное</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Любовь спасёт нас всех. Любовь - это главное! Главное - любить!! </p>
+        </footer>
+    </div>
+
+    <script>
+        // Создание звездного неба
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+
+                // Случайные позиции и размеры
+                const size = Math.random() * 2 + 1;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 4;
+                const duration = 3 + Math.random() * 3;
+
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${left}%`;
+                star.style.top = `${top}%`;
+                star.style.animationDelay = `${delay}s`;
+                star.style.animationDuration = `${duration}s`;
+
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Фильтрация элементов
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const mediaItems = document.querySelectorAll('.media-item');
+            const gifContainer = document.querySelector('.gif-container');
+            const miniaturesRow = document.querySelector('.miniatures-row');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Убираем активный класс у всех кнопок
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Добавляем активный класс к текущей кнопке
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+
+                    // Показываем/скрываем элементы в зависимости от фильтра
+                    if (filterValue === 'all') {
+                        gifContainer.style.display = 'block';
+                        miniaturesRow.style.display = 'grid';
+
+                        // Показываем все элементы
+                        mediaItems.forEach(item => {
+                            item.style.display = 'block';
+                        });
+                    } else if (filterValue === 'audio') {
+                        gifContainer.style.display = 'none';
+                        miniaturesRow.style.display = 'grid';
+
+                        // Показываем только аудио элементы
+                        mediaItems.forEach(item => {
+                            if (item.getAttribute('data-type') === 'audio') {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+                    } else if (filterValue === 'file') {
+                        gifContainer.style.display = 'none';
+                        miniaturesRow.style.display = 'grid';
+
+                        // Показываем только файлы
+                        mediaItems.forEach(item => {
+                            if (item.getAttribute('data-type') === 'file') {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
